@@ -1,0 +1,32 @@
+.profile-picture {
+    border: 1px solid gray;
+    border-radius: 100px;
+    padding: 8px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.developer-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.developer-details {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.developer-icon-detail {
+    /*gap: 0.5rem;*/
+    font-size: 16px;
+    margin-bottom: 1rem;
+}
+
+.version-content {
+    margin-top: 1rem;
+}
+
+hr.divider {
+    border-width: 1px;
+}
