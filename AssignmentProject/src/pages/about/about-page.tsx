@@ -1,10 +1,7 @@
 import {
-    IonAvatar,
-    IonButton,
     IonContent,
     IonHeader,
     IonIcon,
-    IonItemDivider,
     IonPage,
     IonTitle,
     IonToolbar
@@ -13,11 +10,13 @@ import './about-page.css';
 import React from "react";
 import DevImage from '../../assets/images/developer.svg';
 import {DeveloperModel} from "../../models/developer.model";
-import {globeOutline, mail, mailOutline} from "ionicons/icons";
+import {globeOutline, mailOutline} from "ionicons/icons";
 import LogsModal from "../../components/logs/logs-modal";
 
+import PackageJson from '../../../package.json';
+
 const AboutPage: React.FC = () => {
-    const packageVersion: string = "0.0.1"
+    // const packageVersion: string = "0.0.1"
     const developer: DeveloperModel = {
         firstName: "Max",
         lastName: "Mustermann",
@@ -66,7 +65,7 @@ const AboutPage: React.FC = () => {
 
                     {/*VERSION AND LOGS*/}
                     <div className="version-content flex flex-column align-items-center">
-                        <p><strong>Package Version:</strong>&nbsp;{packageVersion}</p>
+                        <p><strong>Package Version:</strong>&nbsp;{PackageJson.version}</p>
 
                         <LogsModal />
                     </div>
