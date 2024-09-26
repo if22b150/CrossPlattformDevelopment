@@ -43,7 +43,6 @@ function LogsModal() {
                 </IonHeader>
                 <IonContent className="ion-padding">
                     <IonList>
-                        {/*TODO: LIST OF ACTUAL LOGS*/}
                         {logs.map((log, i) => {
                             return (
                                 <IonItem key={i}>
