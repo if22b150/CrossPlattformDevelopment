@@ -7,16 +7,20 @@ import {
     IonToolbar
 } from '@ionic/react';
 import './about-page.css';
-import React from "react";
+import React, {useEffect} from "react";
 import DevImage from '../../assets/images/developer.svg';
 import {DeveloperModel} from "../../models/developer.model";
 import {globeOutline, mailOutline} from "ionicons/icons";
 import LogsModal from "../../components/logs/logs-modal";
 
 import PackageJson from '../../../package.json';
+import LoggerService from "../../services/Logger";
 
 const AboutPage: React.FC = () => {
-    // const packageVersion: string = "0.0.1"
+    useEffect(() => {
+        LoggerService.info('About page mounted');
+    }, []);
+
     const developer: DeveloperModel = {
         firstName: "Max",
         lastName: "Mustermann",

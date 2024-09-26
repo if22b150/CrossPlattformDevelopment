@@ -1,27 +1,25 @@
-import React, {useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {
     IonButton,
     IonButtons,
     IonContent,
-    IonHeader, IonInput,
+    IonHeader,
     IonItem, IonLabel, IonList,
     IonModal,
     IonTitle,
     IonToolbar
 } from "@ionic/react";
+import LoggerService from "../../services/Logger";
 
 function LogsModal() {
     const modal = useRef<HTMLIonModalElement>(null);
-    const logEntries: { message: string }[] = [
-        {message: "Log 1"},
-        {message: "Log 2"},
-        {message: "Log 3"},
-        {message: "Log 4"},
-    ]
+    const [logs, setLogs] = useState<string[]>([]);
 
-    // function confirm() {
-    //     modal.current?.dismiss();
-    // }
+    useEffect(() => {
+        LoggerService.info('Log modal mounted')
+        // Get logs when the modal opens
+        setLogs(LoggerService.getLogs());
+    }, []);
 
     return (
         <>
@@ -45,10 +43,11 @@ function LogsModal() {
                 </IonHeader>
                 <IonContent className="ion-padding">
                     <IonList>
-                        {logEntries.map((logEntry, i) => {
+                        {/*TODO: LIST OF ACTUAL LOGS*/}
+                        {logs.map((log, i) => {
                             return (
-                                <IonItem>
-                                    <IonLabel>{logEntry.message}</IonLabel>
+                                <IonItem key={i}>
+                                    <IonLabel>{log}</IonLabel>
                                 </IonItem>
                             )
                         })}

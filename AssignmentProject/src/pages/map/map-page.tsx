@@ -1,7 +1,13 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import './map-page.css';
+import {useEffect} from "react";
+import LoggerService from "../../services/Logger";
 
 const MapPage: React.FC = () => {
+    useEffect(() => {
+        LoggerService.info('Map page mounted');
+    }, []);
+
   return (
     <IonPage>
       <IonHeader>

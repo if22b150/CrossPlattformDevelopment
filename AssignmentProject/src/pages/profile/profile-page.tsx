@@ -1,7 +1,13 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import './profile-page.css';
+import {useEffect} from "react";
+import LoggerService from "../../services/Logger";
 
 const ProfilePage: React.FC = () => {
+    useEffect(() => {
+        LoggerService.info('Profile page mounted');
+    }, []);
+
   return (
     <IonPage>
       <IonHeader>

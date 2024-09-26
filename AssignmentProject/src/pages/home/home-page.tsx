@@ -1,8 +1,13 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import './home-page.css';
-import React from "react";
+import React, {useEffect} from "react";
+import LoggerService from "../../services/Logger";
 
 const HomePage: React.FC = () => {
+    useEffect(() => {
+        LoggerService.info('Home page mounted');
+    }, []);
+
   return (
     <IonPage>
       <IonHeader>
