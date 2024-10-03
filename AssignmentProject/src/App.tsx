@@ -56,7 +56,8 @@ import '@ionic/react/css/palettes/dark.system.css';
 /* Theme variables */
 import './theme/variables.css';
 import React, {useEffect} from "react";
-import LoggerService from "./services/Logger";
+import LoggerService from "./services/LoggerService";
+import AstronautProvider from "./provider/AstronautProvider";
 
 setupIonicReact();
 
@@ -66,40 +67,42 @@ const App: React.FC = () => {
     }, []);
 
     return (
-        <IonApp>
-            <IonReactRouter>
-                <IonTabs>
+        <AstronautProvider initialValue={[]}>
+            <IonApp>
+                <IonReactRouter>
+                    <IonTabs>
 
-                    <IonRouterOutlet>
-                        <Route exact path="/home" component={HomePage}/>
-                        <Route exact path="/map" component={MapPage}/>
-                        <Route exact path="/profile" component={ProfilePage}/>
-                        <Route exact path="/about" component={AboutPage}/>
-                        <Redirect exact from="/" to="/home"/>
-                    </IonRouterOutlet>
+                        <IonRouterOutlet>
+                            <Route exact path="/home" component={HomePage}/>
+                            <Route exact path="/map" component={MapPage}/>
+                            <Route exact path="/profile" component={ProfilePage}/>
+                            <Route exact path="/about" component={AboutPage}/>
+                            <Redirect exact from="/" to="/home"/>
+                        </IonRouterOutlet>
 
-                    <IonTabBar slot="bottom">
-                        <IonTabButton tab="home" href="/home">
-                            <IonIcon aria-hidden="true" icon={home}/>
-                            <IonLabel>Home</IonLabel>
-                        </IonTabButton>
-                        <IonTabButton tab="map" href="/map">
-                            <IonIcon aria-hidden="true" icon={map}/>
-                            <IonLabel>Map</IonLabel>
-                        </IonTabButton>
-                        <IonTabButton tab="profile" href="/profile">
-                            <IonIcon aria-hidden="true" icon={person}/>
-                            <IonLabel>Profile</IonLabel>
-                        </IonTabButton>
-                        <IonTabButton tab="about" href="/about">
-                            <IonIcon aria-hidden="true" icon={informationCircle}/>
-                            <IonLabel>About</IonLabel>
-                        </IonTabButton>
-                    </IonTabBar>
+                        <IonTabBar slot="bottom" id="tab-bar">
+                            <IonTabButton tab="home" href="/home">
+                                <IonIcon aria-hidden="true" icon={home}/>
+                                <IonLabel>Home</IonLabel>
+                            </IonTabButton>
+                            <IonTabButton tab="map" href="/map">
+                                <IonIcon aria-hidden="true" icon={map}/>
+                                <IonLabel>Map</IonLabel>
+                            </IonTabButton>
+                            <IonTabButton tab="profile" href="/profile">
+                                <IonIcon aria-hidden="true" icon={person}/>
+                                <IonLabel>Profile</IonLabel>
+                            </IonTabButton>
+                            <IonTabButton tab="about" href="/about">
+                                <IonIcon aria-hidden="true" icon={informationCircle}/>
+                                <IonLabel>About</IonLabel>
+                            </IonTabButton>
+                        </IonTabBar>
 
-                </IonTabs>
-            </IonReactRouter>
-        </IonApp>
+                    </IonTabs>
+                </IonReactRouter>
+            </IonApp>
+        </AstronautProvider>
     );
 }
 

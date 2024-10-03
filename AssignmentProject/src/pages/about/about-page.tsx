@@ -14,7 +14,7 @@ import {globeOutline, mailOutline} from "ionicons/icons";
 import LogsModal from "../../components/logs/logs-modal";
 
 import PackageJson from '../../../package.json';
-import LoggerService from "../../services/Logger";
+import LoggerService from "../../services/LoggerService";
 
 const AboutPage: React.FC = () => {
     useEffect(() => {

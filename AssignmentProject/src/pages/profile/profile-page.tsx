@@ -1,7 +1,8 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import './profile-page.css';
 import {useEffect} from "react";
-import LoggerService from "../../services/Logger";
+import LoggerService from "../../services/LoggerService";
+import ProfileForm from "../../components/profile/ProfileForm";
 
 const ProfilePage: React.FC = () => {
     useEffect(() => {
@@ -15,17 +16,8 @@ const ProfilePage: React.FC = () => {
           <IonTitle>Profile</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
-        {/*Only for iOS*/}
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Profile</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-
-          {/*Content*/}
-
-
+      <IonContent fullscreen className="ion-padding">
+        <ProfileForm />
       </IonContent>
     </IonPage>
   );

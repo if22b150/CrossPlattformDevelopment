@@ -1,33 +1,23 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import {IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/react';
 import './map-page.css';
-import {useEffect} from "react";
-import LoggerService from "../../services/Logger";
+import React from "react";
+import Map from "../../components/map/Map";
 
 const MapPage: React.FC = () => {
-    useEffect(() => {
-        LoggerService.info('Map page mounted');
-    }, []);
+    return (
+        <IonPage>
+            <IonHeader>
+                <IonToolbar>
+                    <IonTitle>Map</IonTitle>
+                </IonToolbar>
+            </IonHeader>
+            <IonContent fullscreen>
 
-  return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Map</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen>
-          {/*Only for iOS*/}
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Map</IonTitle>
-          </IonToolbar>
-        </IonHeader>
+                <Map></Map>
 
-
-
-      </IonContent>
-    </IonPage>
-  );
+            </IonContent>
+        </IonPage>
+    );
 };
 
 export default MapPage;

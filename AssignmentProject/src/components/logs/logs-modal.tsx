@@ -9,7 +9,7 @@ import {
     IonTitle,
     IonToolbar
 } from "@ionic/react";
-import LoggerService from "../../services/Logger";
+import LoggerService from "../../services/LoggerService";
 
 function LogsModal() {
     const modal = useRef<HTMLIonModalElement>(null);
