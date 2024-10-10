@@ -51,10 +51,17 @@ const Map = () => {
     }
 
     const issMarkerIcon = new Icon({
-        iconUrl: '../../../public/iss-icon.png', // Path to the ISS image
+        iconUrl: '/images/iss-icon.png', // Path to the ISS image
         iconSize: [50, 50], // Size of the icon
         iconAnchor: [25, 25], // Anchor the icon to the center of the marker
         popupAnchor: [0, -25], // Position the popup relative to the icon
+    });
+
+    const currentPositionMarkerIcon = new Icon({
+        iconUrl: '/images/current-location-icon.png', // Path to the custom image for current location
+        iconSize: [30, 40], // Adjust the size as needed
+        iconAnchor: [25, 50], // Anchor the icon to the correct position
+        popupAnchor: [0, -50], // Position the popup relative to the icon
     });
 
     useEffect(() => {
@@ -88,7 +95,7 @@ const Map = () => {
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                <Marker position={currentPosition}>
+                <Marker position={currentPosition} icon={currentPositionMarkerIcon}>
                     <Popup>
                         Device Location
                     </Popup>

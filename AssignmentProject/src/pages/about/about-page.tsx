@@ -8,7 +8,7 @@ import {
 } from '@ionic/react';
 import './about-page.css';
 import React, {useEffect} from "react";
-import DevImage from '../../assets/images/developer.svg';
+import DevImage from '../../../public/images/developer.svg';
 import {DeveloperModel} from "../../models/developer.model";
 import {globeOutline, mailOutline} from "ionicons/icons";
 import LogsModal from "../../components/logs/logs-modal";
