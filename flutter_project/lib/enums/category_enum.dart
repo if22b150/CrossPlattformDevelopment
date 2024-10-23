@@ -1,0 +1,1 @@
+enum Category { restaurant, shop, park, hotel, other }
