@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_project/providers/location_provider.dart';
 import 'package:flutter_project/widgets/home/locations_list.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:provider/provider.dart';
-import '../providers/location_provider.dart';
 import '../widgets/home/add_item.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final locationProvider = Provider.of<LocationProvider>(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final locationState = ref.watch(locationProvider);
+    final locationNotifier = ref.read(locationProvider.notifier);
+
+    void showSnackBar(String message, Color bgColor) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message), backgroundColor: bgColor,),
+      );
+    }
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
@@ -28,9 +35,11 @@ class HomePage extends StatelessWidget {
                       top: Radius.circular(25.0), // Rounded top edges
                     ),
                   ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                  child: AddItem(onSubmit: locationProvider.addLocation),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  child: AddItem(onSubmit: (name, lat, lng, category) async {
+                    final result = await locationNotifier.addLocation(name, lat, lng, category);
+                    if (result != null) showSnackBar(result, Colors.green);
+                  }),
                 ),
               );
             },
@@ -58,15 +67,21 @@ class HomePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     OutlinedButton(
-                      onPressed: locationProvider.loading
+                      onPressed: locationState.loading
                           ? null
-                          : () => locationProvider.generateLocations(1000),
+                          : () async {
+                        final result = await locationNotifier.generateLocations(1000);
+                        if (result != null) showSnackBar(result, Colors.green);
+                      },
                       child: const Text("Generate locations"),
                     ),
                     OutlinedButton(
-                      onPressed: locationProvider.locations.isEmpty
+                      onPressed: locationState.locations.isEmpty
                           ? null
-                          : locationProvider.deleteAllLocations,
+                          : () async {
+                        final result = await locationNotifier.deleteAllLocations();
+                        if (result != null) showSnackBar(result, Colors.green);
+                      },
                       child: const Text("Delete all locations"),
                     ),
                   ],
@@ -75,16 +90,16 @@ class HomePage extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: locationProvider.loadingLocations
+            child: locationState.loadingLocations
                 ? const Center(child: CircularProgressIndicator())
-                : locationProvider.locations.isNotEmpty
-                    ? LocationsList(locations: locationProvider.locations)
-                    : Center(
-                        child: Text(
-                          'No locations available. Generate some!',
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                      ),
+                : locationState.locations.isNotEmpty
+                ? LocationsList(locations: locationState.locations)
+                : Center(
+              child: Text(
+                'No locations available. Generate some!',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            ),
           ),
         ],
       ),

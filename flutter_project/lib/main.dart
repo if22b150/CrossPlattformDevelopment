@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/pages/about_page.dart';
-import 'package:flutter_project/pages/home_page.dart';
-import 'package:flutter_project/pages/map_page.dart';
-import 'package:flutter_project/pages/profile_page.dart';
-import 'package:flutter_project/providers/location_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_project/pages/login_page.dart';
+import 'package:flutter_project/providers/auth_provider.dart';
+import 'package:flutter_project/widgets/scaffolds/main_scaffold.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => LocationProvider()),
-      ],
-      child: const MyApp(),
+    const ProviderScope(
+      child: MyApp(),
     ),
   );
 }
@@ -33,58 +28,36 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class EntryPage extends StatefulWidget {
+class EntryPage extends ConsumerWidget {
   const EntryPage({super.key});
 
   @override
-  State<EntryPage> createState() => _MyHomePageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authState = ref.watch(authProvider);
 
-class _MyHomePageState extends State<EntryPage> {
-  int currentPageIndex = 0;
+    // Show loading spinner while user data is loading
+    if (authState.loading) {
+      return const Scaffold(
+        body: Center(
+            child: Column(
+          children: [
+            CircleAvatar(
+              radius: 50,
+              backgroundColor: Colors.transparent,
+              backgroundImage: AssetImage(
+                'lib/assets/images/logo.png',
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            CircularProgressIndicator()
+          ],
+        )),
+      );
+    }
 
-  final List<Widget> _pages = [
-    const HomePage(),
-    const MapPage(),
-    const ProfilePage(),
-    const AboutPage()
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("Flutter App"),
-      ),
-      bottomNavigationBar: NavigationBar(
-        onDestinationSelected: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
-        },
-        selectedIndex: currentPageIndex,
-        destinations: const <Widget>[
-          NavigationDestination(
-            selectedIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.map),
-            label: 'Map',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.info),
-            label: 'About',
-          ),
-        ],
-      ),
-      body: _pages[currentPageIndex]
-    );
+    // Check if the user is logged in or not
+    return authState.user != null ? const MainScaffold() : const LoginPage();
   }
 }

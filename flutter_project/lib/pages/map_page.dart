@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/models/location_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart'; // Import Google Maps
 import 'package:geolocator/geolocator.dart';
-import 'package:provider/provider.dart';
+
 import '../providers/location_provider.dart';
 
-class MapPage extends StatefulWidget {
+class MapPage extends ConsumerStatefulWidget {
   const MapPage({super.key});
 
   @override
-  State<MapPage> createState() => _MapPageState();
+  ConsumerState<MapPage> createState() => _MapPageState();
 }
 
-class _MapPageState extends State<MapPage> {
+class _MapPageState extends ConsumerState<MapPage> {
   GoogleMapController? _googleMapController;
   LatLng? _currentLocation;
   final Set<Marker> _markers = {};
@@ -135,11 +136,6 @@ class _MapPageState extends State<MapPage> {
         _addCurrentLocationMarker(); // Update current location marker
       });
       _goToCurrentLocation();
-
-      // Optionally animate the map to the new location
-      _googleMapController?.animateCamera(
-        CameraUpdate.newLatLng(_currentLocation!),
-      );
     });
   }
 
@@ -190,11 +186,10 @@ class _MapPageState extends State<MapPage> {
 
   @override
   Widget build(BuildContext context) {
-    final locationProvider = Provider.of<LocationProvider>(context);
-    final savedLocations = locationProvider.locations;
+    final locationState = ref.watch(locationProvider);
 
-    if (savedLocations.isNotEmpty) {
-      _addSavedLocationMarkers(savedLocations);
+    if (locationState.locations.isNotEmpty) {
+      _addSavedLocationMarkers(locationState.locations);
     }
 
     return Scaffold(

@@ -1,19 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/pages/login_page.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ProfilePage extends StatefulWidget {
+import '../providers/auth_provider.dart';
+
+class ProfilePage extends ConsumerWidget {
   const ProfilePage({super.key});
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authNotifier = ref.read(authProvider.notifier);
+    final authState = ref.watch(authProvider);
 
-class _ProfilePageState extends State<ProfilePage> {
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-        ],
+      body: Center(
+        child: ElevatedButton(
+            onPressed: () async {
+              await authNotifier.logout();
+
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => const LoginPage()),
+              );
+            },
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 15.0),
+              child: Text(
+                'Logout',
+                style: TextStyle(fontSize: 18),
+              ),
+            )
+        ),
       ),
     );
   }
